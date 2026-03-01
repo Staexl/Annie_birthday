@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy 30th Birthday!</title>
+    <title>Happy 30th Birthday, Annie!</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
     <!-- Canvas Confetti Library -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
     <style>
@@ -36,17 +38,43 @@
             color: var(--dark-text);
             overflow-x: hidden;
             scroll-behavior: smooth;
+            transition: background-color 0.5s ease;
+        }
+
+        /* Party Mode Theme */
+        body.party-mode {
+            background-color: #111;
+            color: #fff;
+            --hot-pink: #ff00ff;
+            --light-pink: #1a001a;
+            --dark-text: #fff;
+            --blush: #330033;
+            animation: strobe 1s infinite alternate;
+        }
+
+        @keyframes strobe {
+            0% {
+                box-shadow: inset 0 0 50px #ff00ff;
+            }
+
+            100% {
+                box-shadow: inset 0 0 50px #00ffff;
+            }
         }
 
         /* Headings */
-        h1, h2, h3, .signature {
+        h1,
+        h2,
+        h3,
+        .signature {
             font-family: 'Pacifico', cursive;
             color: var(--hot-pink);
             font-weight: normal;
+            transition: color 0.3s;
         }
 
         h1 {
-            font-size: clamp(3rem, 8vw, 5rem);
+            font-size: clamp(2.5rem, 8vw, 5rem);
             line-height: 1.2;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
             margin-bottom: 10px;
@@ -74,10 +102,16 @@
             padding: 20px;
             background: linear-gradient(135deg, var(--blush) 0%, var(--light-pink) 100%);
             overflow: hidden;
+            transition: background 0.5s ease;
+        }
+
+        body.party-mode .hero {
+            background: linear-gradient(135deg, #220022 0%, #000000 100%);
         }
 
         /* Ambient Glow Background Effect */
-        .hero::before, .hero::after {
+        .hero::before,
+        .hero::after {
             content: '';
             position: absolute;
             border-radius: 50%;
@@ -85,24 +119,41 @@
             z-index: 0;
             opacity: 0.6;
         }
-        
+
         .hero::before {
-            width: 500px; height: 500px;
+            width: 500px;
+            height: 500px;
             background: var(--hot-pink);
-            top: -100px; left: -100px;
+            top: -100px;
+            left: -100px;
             animation: drift 12s infinite alternate ease-in-out;
         }
-        
+
         .hero::after {
-            width: 400px; height: 400px;
+            width: 400px;
+            height: 400px;
             background: var(--rose-gold);
-            bottom: -50px; right: -50px;
+            bottom: -50px;
+            right: -50px;
             animation: drift 15s infinite alternate-reverse ease-in-out;
         }
 
+        body.party-mode .hero::before {
+            background: #00ffff;
+        }
+
+        body.party-mode .hero::after {
+            background: #ff00ff;
+        }
+
         @keyframes drift {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(50px, 50px) scale(1.1); }
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            100% {
+                transform: translate(50px, 50px) scale(1.1);
+            }
         }
 
         /* Glassmorphism Hero Content */
@@ -121,9 +172,10 @@
             animation: fadeUp 1s ease-out forwards;
         }
 
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
+        body.party-mode .hero-content {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 0, 255, 0.5);
+            box-shadow: 0 15px 35px rgba(255, 0, 255, 0.4);
         }
 
         .sub-headline {
@@ -135,42 +187,67 @@
             margin-bottom: 35px;
         }
 
+        body.party-mode .sub-headline {
+            color: #00ffff;
+            text-shadow: 0 0 10px #00ffff;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            position: relative;
+            min-height: 60px;
+            /* Space for the buttons */
+        }
+
         /* Interactive Celebrate Button */
-        .btn-celebrate {
+        .btn {
             background: linear-gradient(45deg, var(--hot-pink), var(--rose-gold));
             color: var(--white);
             border: none;
-            padding: 18px 50px;
-            font-size: 1.3rem;
+            padding: 18px 40px;
+            font-size: 1.2rem;
             font-family: 'Poppins', sans-serif;
             font-weight: 700;
             border-radius: 50px;
             cursor: pointer;
             box-shadow: 0 8px 20px rgba(255, 105, 180, 0.4);
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 1px;
             position: relative;
-            overflow: hidden;
+            z-index: 20;
         }
 
-        .btn-celebrate::after {
-            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: rgba(255, 255, 255, 0.2);
-            transform: rotate(45deg);
-            transition: all 0.5s ease;
-            opacity: 0;
+        .btn-celebrate {
+            z-index: 21;
         }
 
-        .btn-celebrate:hover::after { left: 100%; opacity: 1; }
+        /* The Runaway Button */
+        .btn-runaway {
+            background: linear-gradient(45deg, #a0a0a0, #666666);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.1s ease, left 0.3s ease, top 0.3s ease;
+        }
 
-        .btn-celebrate:hover {
+        body.party-mode .btn-celebrate {
+            background: linear-gradient(45deg, #ff00ff, #00ffff);
+            box-shadow: 0 8px 20px rgba(0, 255, 255, 0.6);
+        }
+
+        .btn:hover {
             transform: translateY(-5px) scale(1.05);
             box-shadow: 0 12px 25px rgba(255, 105, 180, 0.6);
         }
 
-        .btn-celebrate:active {
-            transform: translateY(2px) scale(0.98);
+        .btn-runaway:hover {
+            /* We don't want hover scale for runaway because it jumps */
+            transform: none;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
         }
 
         /* Elegant Countdown */
@@ -179,7 +256,7 @@
             border-top: 1px solid rgba(255, 105, 180, 0.3);
             padding-top: 30px;
         }
-        
+
         .countdown-title {
             font-size: 1rem;
             text-transform: uppercase;
@@ -206,11 +283,19 @@
             flex-direction: column;
             align-items: center;
             border: 2px solid var(--blush);
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, background 0.3s;
+            cursor: pointer;
+            /* make them look clickable for the joke */
+        }
+
+        body.party-mode .cd-box {
+            background: #222;
+            border-color: #ff00ff;
         }
 
         .cd-box:hover {
             transform: translateY(-5px);
+            background: var(--light-pink);
         }
 
         .cd-time {
@@ -219,6 +304,7 @@
             line-height: 1;
             color: var(--hot-pink);
             margin-bottom: 5px;
+            transition: transform 0.2s;
         }
 
         .cd-label {
@@ -229,18 +315,27 @@
             letter-spacing: 1px;
         }
 
+        body.party-mode .cd-label {
+            color: #00ffff;
+        }
+
         /* Generic Section Styling */
         .section {
             padding: 100px 20px;
             max-width: 1200px;
             margin: 0 auto;
             text-align: center;
+            position: relative;
         }
-        
+
         .section-desc {
             max-width: 600px;
             margin: 0 auto 40px;
             color: #555;
+        }
+
+        body.party-mode .section-desc {
+            color: #ccc;
         }
 
         /* Photo Gallery - Polaroid Style */
@@ -258,20 +353,31 @@
             border-radius: 4px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             position: relative;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: pointer;
             transform-style: preserve-3d;
         }
 
+        /* The Spin class added via JS */
+        .polaroid.spin-crazy {
+            transform: rotate(1080deg) scale(0.5) !important;
+            opacity: 0.5;
+        }
+
+        body.party-mode .polaroid {
+            background: #222;
+            box-shadow: 0 10px 25px #ff00ff44;
+        }
+
         .polaroid::after {
-            content: '♥';
+            content: '♥ Annie ♥';
             position: absolute;
             bottom: 15px;
             left: 0;
             right: 0;
             text-align: center;
             color: var(--hot-pink);
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             opacity: 0.8;
             font-family: 'Pacifico', cursive;
         }
@@ -282,18 +388,34 @@
             object-fit: cover;
             background: #eee;
             border-radius: 2px;
+            transition: filter 0.3s;
         }
-        
+
         /* Tilt specific polaroids */
-        .polaroid:nth-child(1) { transform: rotate(-4deg) translateY(10px); }
-        .polaroid:nth-child(2) { transform: rotate(3deg) translateY(-5px); }
-        .polaroid:nth-child(3) { transform: rotate(-2deg) translateY(15px); }
-        .polaroid:nth-child(4) { transform: rotate(5deg) translateY(-10px); }
+        .polaroid:nth-child(1) {
+            transform: rotate(-4deg) translateY(10px);
+        }
+
+        .polaroid:nth-child(2) {
+            transform: rotate(3deg) translateY(-5px);
+        }
+
+        .polaroid:nth-child(3) {
+            transform: rotate(-2deg) translateY(15px);
+        }
+
+        .polaroid:nth-child(4) {
+            transform: rotate(5deg) translateY(-10px);
+        }
 
         .polaroid:hover {
             transform: rotate(0deg) scale(1.1) translateZ(30px);
             box-shadow: 0 20px 40px rgba(255, 105, 180, 0.3);
             z-index: 20;
+        }
+
+        body.party-mode .polaroid:hover {
+            box-shadow: 0 20px 40px rgba(0, 255, 255, 0.5);
         }
 
         /* Message of the Day Box */
@@ -305,6 +427,11 @@
             padding: 80px 30px;
             position: relative;
             overflow: hidden;
+            transition: background 0.5s;
+        }
+
+        body.party-mode .message-section {
+            background: linear-gradient(135deg, #111 0%, #330033 100%);
         }
 
         .message-box {
@@ -320,6 +447,11 @@
             transition: transform 0.3s ease;
         }
 
+        body.party-mode .message-box {
+            background: rgba(0, 0, 0, 0.5);
+            border-color: #00ffff;
+        }
+
         .message-box:hover {
             transform: translateY(-5px);
         }
@@ -333,8 +465,20 @@
             line-height: 1;
         }
 
-        .quote-left { top: -10px; left: 20px; }
-        .quote-right { bottom: -40px; right: 20px; }
+        body.party-mode .quote-icon {
+            color: #ff00ff;
+            opacity: 0.5;
+        }
+
+        .quote-left {
+            top: -10px;
+            left: 20px;
+        }
+
+        .quote-right {
+            bottom: -40px;
+            right: 20px;
+        }
 
         .message-text {
             font-size: clamp(1.2rem, 3vw, 1.5rem);
@@ -363,10 +507,11 @@
             border: 1px solid var(--blush);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        
-        .playlist-wrapper:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(255, 105, 180, 0.25);
+
+        body.party-mode .playlist-wrapper {
+            background: #222;
+            border-color: #ff00ff;
+            box-shadow: 0 15px 35px rgba(255, 0, 255, 0.3);
         }
 
         /* Footer */
@@ -374,57 +519,357 @@
             background: var(--rose-gold);
             color: var(--white);
             text-align: center;
-            padding: 30px 20px;
+            padding: 40px 20px;
             margin-top: 60px;
             font-weight: 300;
             letter-spacing: 1px;
+            transition: background 0.5s;
+            position: relative;
         }
 
-        .footer-heart {
+        body.party-mode footer {
+            background: #330033;
+            border-top: 2px solid #ff00ff;
+        }
+
+        /* The Secret Party Button */
+        #secretPartyBtn {
+            background: transparent;
+            border: 1px dashed rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.5);
+            padding: 5px 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 15px;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+        }
+
+        #secretPartyBtn:hover {
+            border-color: #fff;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Floating trick for JS */
+        .floating-trick {
+            position: fixed;
+            pointer-events: none;
+            font-size: 3rem;
+            z-index: 9999;
+            animation: shootUp 2s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+        }
+
+        @keyframes shootUp {
+            0% {
+                transform: translateY(0) scale(0.5);
+                opacity: 1;
+            }
+
+            50% {
+                transform: translateY(-300px) scale(1.5);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-600px) scale(0);
+                opacity: 0;
+            }
+        }
+
+        /* Celebration Rocket */
+        .celebration-rocket {
+            position: fixed;
+            bottom: -50px;
+            font-size: 4rem;
+            z-index: 10000;
+            pointer-events: none;
+            animation: shootRocket 1.5s cubic-bezier(0.5, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes shootRocket {
+            0% {
+                transform: translateY(0) rotate(-45deg);
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-120vh) rotate(-45deg);
+                opacity: 0;
+            }
+        }
+
+        /* -------------------------- */
+        /* --- BRAND NEW FEATURES --- */
+        /* -------------------------- */
+
+        /* 1. Loading Screen */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, var(--hot-pink) 0%, var(--rose-gold) 100%);
+            z-index: 999999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        #loader h2 {
+            font-family: 'Pacifico', cursive;
+            color: white;
+            font-size: 3rem;
+            animation: pulseText 1.5s infinite;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        #loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        @keyframes pulseText {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+
+            50% {
+                transform: scale(1.1);
+                opacity: 1;
+                text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+            }
+        }
+
+        /* 2. Cursor Tail (Magic Sparkles) */
+        .sparkle-cursor {
+            position: fixed;
+            pointer-events: none;
+            z-index: 99999;
+            font-size: 1.2rem;
+            animation: fallFade 1s linear forwards;
+            user-select: none;
+        }
+
+        @keyframes fallFade {
+            0% {
+                transform: translateY(0) scale(1) rotate(0deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(50px) scale(0) rotate(90deg);
+                opacity: 0;
+            }
+        }
+
+        /* 3. Hidden Gift Box */
+        .hidden-gift-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9990;
+            width: 80px;
+            height: 80px;
+            perspective: 1000px;
+        }
+
+        .gift-box {
+            font-size: 4rem;
+            cursor: pointer;
+            filter: drop-shadow(0 10px 15px rgba(255, 105, 180, 0.4));
+            animation: bounceGift 2s infinite;
+            transition: transform 0.3s;
+            user-select: none;
+            text-align: center;
+            line-height: 80px;
+        }
+
+        .gift-box:hover {
+            animation: none;
+            transform: scale(1.1) rotate(-5deg);
+        }
+
+        @keyframes bounceGift {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-20px);
+            }
+
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .gift-content {
+            position: absolute;
+            bottom: 100px;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px dashed var(--hot-pink);
+            box-shadow: 0 15px 35px var(--shadow);
+            width: 280px;
+            text-align: center;
+            transform-origin: bottom right;
+            transform: scale(0);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            pointer-events: none;
+        }
+
+        .gift-content.open {
+            transform: scale(1);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        body.party-mode .gift-content {
+            background: #222;
+            border-color: #00ffff;
+            color: #fff;
+        }
+
+        .gift-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
             color: var(--hot-pink);
-            animation: beat 1s infinite alternate;
-            display: inline-block;
         }
 
-        @keyframes beat {
-            to { transform: scale(1.3); }
+        body.party-mode .gift-content h3 {
+            color: #ff00ff;
+        }
+
+        .gift-content p {
+            font-size: 1rem;
+            color: var(--dark-text);
+            font-weight: 600;
+        }
+
+        body.party-mode .gift-content p {
+            color: #fff;
+        }
+
+        /* Tear Animation class applied via JS */
+        .tear-anim {
+            animation: tearBox 0.6s forwards;
+            pointer-events: none;
+        }
+
+        @keyframes tearBox {
+            0% {
+                transform: scale(1) rotate(0deg);
+            }
+
+            20% {
+                transform: scale(1.2) rotate(10deg);
+            }
+
+            40% {
+                transform: scale(1.2) rotate(-10deg);
+            }
+
+            60% {
+                transform: scale(1.2) rotate(15deg) translateY(-10px);
+            }
+
+            100% {
+                transform: scale(0) rotate(45deg) translateY(50px);
+                opacity: 0;
+            }
         }
 
         /* Responsive Tweaks */
         @media (max-width: 600px) {
-            .hero-content { padding: 40px 20px; }
-            .cd-box { min-width: 70px; padding: 10px; }
-            .cd-time { font-size: 1.8rem; }
-            .message-box { padding: 40px 20px; }
+            .hero-content {
+                padding: 40px 20px;
+            }
+
+            .cd-box {
+                min-width: 70px;
+                padding: 10px;
+            }
+
+            .cd-time {
+                font-size: 1.8rem;
+            }
+
+            .message-box {
+                padding: 40px 20px;
+            }
         }
     </style>
 </head>
+
 <body>
+
+    <!-- Loading Screen -->
+    <div id="loader">
+        <h2>Preparing MAXIMUM FABULOUSNESS...</h2>
+    </div>
+
+    <!-- Hidden Gift Feature -->
+    <div class="hidden-gift-container" id="giftContainer">
+        <div class="gift-box" id="giftBox" title="A secret gift for Annie!">🎁</div>
+        <div class="gift-content" id="giftContent">
+            <h3>Secret Coupon! 🎉</h3>
+            <p>Good for 1 FREE Coffee ☕🍸</p>
+            <p style="font-size:0.8rem; margin-top:10px; opacity:0.7;">Too late brian took it</p>
+        </div>
+    </div>
 
     <!-- Hero Section -->
     <header class="hero">
         <div class="hero-content">
-            <h1>Cheers to 30 Years!</h1>
-            <div class="sub-headline">30 & Fabulous</div>
-            
-            <button class="btn-celebrate" id="celebrateBtn">Celebrate!</button>
-            
+            <h1>Happy Birthday,<br>Annie!</h1>
+            <div class="sub-headline">Fabulous Forever</div>
+
+            <div class="action-buttons">
+                <!-- Our normal party button -->
+                <button class="btn btn-celebrate" id="celebrateBtn">🎉 Celebrate!</button>
+                <!-- Our fun prank button that runs away -->
+                <button class="btn btn-runaway" id="runawayBtn">Wait, I'm younger!</button>
+            </div>
+
             <div class="countdown-wrapper">
-                <div class="countdown-title">Countdown to the Dirty 30</div>
+                <div class="countdown-title">Countdown to the Big Day</div>
                 <div class="countdown" id="countdown">
-                    <div class="cd-box">
+                    <!-- Fun Trick: Click them to scramble them! -->
+                    <div class="cd-box trick-box">
                         <div class="cd-time" id="c-days">00</div>
                         <div class="cd-label">Days</div>
                     </div>
-                    <div class="cd-box">
+                    <div class="cd-box trick-box">
                         <div class="cd-time" id="c-hours">00</div>
                         <div class="cd-label">Hours</div>
                     </div>
-                    <div class="cd-box">
+                    <div class="cd-box trick-box">
                         <div class="cd-time" id="c-minutes">00</div>
                         <div class="cd-label">Mins</div>
                     </div>
-                    <div class="cd-box">
+                    <div class="cd-box trick-box">
                         <div class="cd-time" id="c-seconds">00</div>
                         <div class="cd-label">Secs</div>
                     </div>
@@ -433,103 +878,202 @@
         </div>
     </header>
 
-    <!-- Memories Gallery Section -->
-    <section class="section" id="memories">
-        <h2>30 Years of Memories</h2>
-        <p class="section-desc">A beautiful collection of fabulous moments, unforgettable adventures, and endless smiles.</p>
-        
-        <div class="gallery-grid">
-            <div class="polaroid">
-                <img src="https://images.unsplash.com/photo-1530103862676-de8892cae243?w=500&h=500&fit=crop" alt="Party Balloons">
-            </div>
-            <div class="polaroid">
-                <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=500&h=500&fit=crop" alt="Celebration Time">
-            </div>
-            <div class="polaroid">
-                <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?w=500&h=500&fit=crop" alt="Birthday Cake">
-            </div>
-            <div class="polaroid">
-                <img src="https://images.unsplash.com/photo-1516997121675-4c2d1684aa3e?w=500&h=500&fit=crop" alt="Cheers with Friends">
-            </div>
-        </div>
-    </section>
+    </header>
 
     <!-- Message of the Day Section -->
     <div class="message-section">
         <section class="section" style="padding: 0;">
-            <h2>Message of the Day</h2>
+            <h2>Message for Annie</h2>
             <div class="message-box">
                 <span class="quote-icon quote-left">“</span>
                 <p class="message-text">
-                    Happy 30th Birthday to the most fabulous, radiant, and wonderful friend! May this new chapter bring you as much joy, love, and vibrant pink energy as you bring into the world. Embrace the sparkle, the laughter, and the fabulous journey ahead!
+                    Happy Birthday, Annie! С днём рождения!<br><br>
+                    Happy birthday my meeeeeeh, I was just thinking about everything we’ve been through together. You’ve
+                    been my constant through every high and low, and honestly, you’re the best part of every moment
+                    we've shared. You are a true красотка not just in how you look, but in how you are. I’m so
+                    incredibly lucky to have a bestie like you by my side. Here is to us, always.
                 </p>
                 <span class="quote-icon quote-right">”</span>
-                <div class="signature">- With So Much Love</div>
+                <div class="signature">- made by brian the maaaaa</div>
             </div>
         </section>
     </div>
 
     <!-- Playlist Section -->
     <section class="section" id="playlist">
-        <h2>Fabulous Playlist</h2>
-        <p class="section-desc">Get the party started with the ultimate soundtrack for your 30s. Press play and let's dance!</p>
-        
+        <h2>Annie's Anthem Playlist</h2>
+        <p class="section-desc">Get the party started with the ultimate soundtrack! Press play and let's
+            dance!</p>
+
         <div class="playlist-wrapper">
-            <!-- Spotify Embed Placeholder -->
-            <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DWT3gqX1JzFwJ?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            <iframe width="100%" height="352" style="border-radius:12px"
+                src="https://www.youtube.com/embed/7d8EH2Ozlss?si=JQmP7jFjuRCBDj5i" title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen></iframe>
         </div>
     </section>
 
     <!-- Footer -->
     <footer>
-        <p>Made with <span class="footer-heart">♥</span> for your special day.</p>
+        <p>Made with <span style="color:var(--hot-pink)">♥</span> for Annie's special day.</p>
+        <button id="secretPartyBtn">DO NOT CLICK THIS BUTTON</button>
     </footer>
 
     <!-- Interactive Logic -->
     <script>
+        // --- Confetti Logic ---
+        function fireConfetti() {
+            const defaults = { origin: { y: 0.7 }, zIndex: 105 };
+            function fire(particleRatio, opts) {
+                confetti(Object.assign({}, defaults, opts, {
+                    particleCount: Math.floor(200 * particleRatio),
+                    colors: ['#FF69B4', '#B76E79', '#FFD700', '#FEC5E5', '#FFFFFF']
+                }));
+            }
+            fire(0.25, { spread: 26, startVelocity: 55 });
+            fire(0.2, { spread: 60 });
+            fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+            fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
+            fire(0.1, { spread: 120, startVelocity: 45 });
+
+            for (let i = 0; i < 3; i++) {
+                setTimeout(launchRocket, i * 200 + 100);
+            }
+        }
+
+        function launchRocket() {
+            const rocket = document.createElement('div');
+            rocket.className = 'celebration-rocket';
+            rocket.innerText = '🚀';
+            rocket.style.left = (Math.random() * 80 + 10) + 'vw';
+            document.body.appendChild(rocket);
+            setTimeout(() => rocket.remove(), 1500);
+        }
+
+        // Trick floating visual
+        function spawnFloatingTrick(e, text) {
+            const el = document.createElement('div');
+            el.className = 'floating-trick';
+            el.innerText = text;
+            el.style.left = (e.clientX - 20) + 'px';
+            el.style.top = (e.clientY - 20) + 'px';
+            document.body.appendChild(el);
+            setTimeout(() => el.remove(), 2000);
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
-            
-            // --- Confetti Logic ---
-            const celebrateBtn = document.getElementById('celebrateBtn');
-            celebrateBtn.addEventListener('click', () => {
-                const defaults = { origin: { y: 0.7 }, zIndex: 105 };
 
-                function fire(particleRatio, opts) {
-                    confetti(Object.assign({}, defaults, opts, {
-                        particleCount: Math.floor(200 * particleRatio),
-                        colors: ['#FF69B4', '#B76E79', '#FFD700', '#FEC5E5', '#FFFFFF']
-                    }));
+            // --- FEATURE 1: Loading Screen ---
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+            }, 2000); // 2 second mock load
+
+            // --- FEATURE 2: Magic Cursor Tail ---
+            let lastSparkleTime = 0;
+            const sparkleEmojis = ['✨', '💖', '⭐', '🌸'];
+            document.addEventListener('mousemove', (e) => {
+                const now = Date.now();
+                if (now - lastSparkleTime > 30) { // Throttle slightly for performance
+                    lastSparkleTime = now;
+                    const sparkle = document.createElement('div');
+                    sparkle.className = 'sparkle-cursor';
+                    sparkle.innerText = sparkleEmojis[Math.floor(Math.random() * sparkleEmojis.length)];
+                    sparkle.style.left = (e.clientX - 10) + 'px';
+                    sparkle.style.top = (e.clientY - 10) + 'px';
+                    document.body.appendChild(sparkle);
+                    setTimeout(() => sparkle.remove(), 1000);
                 }
-
-                // Fireworks effect
-                fire(0.25, { spread: 26, startVelocity: 55 });
-                fire(0.2, { spread: 60 });
-                fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
-                fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
-                fire(0.1, { spread: 120, startVelocity: 45 });
             });
 
-            // --- Countdown Timer Logic ---
-            // Set the target to 30 days from exactly now (so it looks awesome on open)
+            // --- FEATURE 3: Hidden Gift Box ---
+            const giftBox = document.getElementById('giftBox');
+            const giftContent = document.getElementById('giftContent');
+            let giftOpened = false;
+
+            giftBox.addEventListener('click', (e) => {
+                if (giftOpened) return; // Only allow unwrap once
+                giftOpened = true;
+
+                // Shake and tear baby!
+                giftBox.classList.add('tear-anim');
+
+                // Pop some confetti right where the gift is!
+                const rect = giftBox.getBoundingClientRect();
+                const btnX = (rect.left + rect.width / 2) / window.innerWidth;
+                const btnY = (rect.top + rect.height / 2) / window.innerHeight;
+                confetti({
+                    particleCount: 50, spread: 60, origin: { x: btnX, y: btnY },
+                    colors: ['#FF69B4', '#FFD700', '#FFFFFF']
+                });
+
+                // Reveal coupon after tear finishes
+                setTimeout(() => {
+                    giftContent.classList.add('open');
+                }, 600);
+            });
+
+            // 1. Celebrate Button
+            const celebrateBtn = document.getElementById('celebrateBtn');
+            celebrateBtn.addEventListener('click', fireConfetti);
+
+            // 2. The Runaway Button!
+            const runawayBtn = document.getElementById('runawayBtn');
+            const funnyPhrases = ["Nope!", "Too slow!", "Nice try!", "You're ageless!", "Can't catch me!", "Forever young!", "Admit it!"];
+            let runawayCount = 0;
+
+            runawayBtn.addEventListener('mouseover', (e) => {
+                // If they manage to chase it enough times, it gives up
+                if (runawayCount > 10) {
+                    runawayBtn.innerText = "Okay fine, you caught me!";
+                    runawayBtn.style.position = 'static';
+                    return;
+                }
+
+                // Make position absolute so it can teleport freely relative to the window
+                runawayBtn.style.position = 'fixed';
+
+                // Calculate random safe spot on screen
+                const maxW = window.innerWidth - runawayBtn.offsetWidth - 20;
+                const maxH = window.innerHeight - runawayBtn.offsetHeight - 20;
+
+                const randomX = Math.max(20, Math.floor(Math.random() * maxW));
+                const randomY = Math.max(20, Math.floor(Math.random() * maxH));
+
+                runawayBtn.style.left = randomX + 'px';
+                runawayBtn.style.top = randomY + 'px';
+
+                // Change text to mock the user playfully
+                runawayBtn.innerText = funnyPhrases[Math.floor(Math.random() * funnyPhrases.length)];
+                runawayCount++;
+            });
+
+            // If they somehow manage to click it
+            runawayBtn.addEventListener('click', () => {
+                alert("Wow! You caught it! Best reflexes ever!");
+                fireConfetti();
+            });
+
+            // 3. Fake Countdown Scramble!
             const targetDate = new Date();
-            targetDate.setDate(targetDate.getDate() + 30);
-            
+            const year = targetDate.getMonth() > 2 ? targetDate.getFullYear() + 1 : targetDate.getFullYear();
+            targetDate.setFullYear(year, 2, 11); // March 11th
+            targetDate.setHours(0, 0, 0, 0);
+
             const elDays = document.getElementById("c-days");
             const elHours = document.getElementById("c-hours");
             const elMinutes = document.getElementById("c-minutes");
             const elSeconds = document.getElementById("c-seconds");
 
+            let isScrambling = false;
+
             const updateCountdown = () => {
+                if (isScrambling) return; // Freeze normal timer if we are pranking them
+
                 const now = new Date().getTime();
                 const distance = targetDate.getTime() - now;
 
-                if (distance < 0) {
-                    elDays.innerText = "00";
-                    elHours.innerText = "00";
-                    elMinutes.innerText = "00";
-                    elSeconds.innerText = "00";
-                    return;
-                }
+                if (distance < 0) return;
 
                 const days = Math.floor(distance / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -545,7 +1089,64 @@
             setInterval(updateCountdown, 1000);
             updateCountdown();
 
+            // Scramble functionality when clicked
+            document.querySelectorAll('.trick-box').forEach(box => {
+                box.addEventListener('click', (e) => {
+                    if (isScrambling) return;
+                    isScrambling = true;
+                    spawnFloatingTrick(e, '❓');
+
+                    const textsToScramble = [elDays, elHours, elMinutes, elSeconds];
+
+                    let interval = setInterval(() => {
+                        textsToScramble.forEach(el => {
+                            el.innerText = Math.floor(Math.random() * 99).toString().padStart(2, '0');
+                            el.style.transform = `scale(${1 + Math.random() * 0.5}) rotate(${(Math.random() - 0.5) * 20}deg)`;
+                            el.style.color = ['#FFD700', '#FF69B4', '#00FFFF', '#FF00FF'][Math.floor(Math.random() * 4)];
+                        });
+                    }, 50);
+
+                    setTimeout(() => {
+                        clearInterval(interval);
+                        textsToScramble.forEach(el => {
+                            el.style.transform = 'none';
+                            el.style.color = ''; // reset to css
+                        });
+                        isScrambling = false;
+                        updateCountdown(); // force update real time back
+                    }, 1500); // Scramble for 1.5 seconds!
+                });
+            });
+
+            // 5. Party Mode Button!
+            const partyBtn = document.getElementById('secretPartyBtn');
+            let trickMode = true; // First time they try to click, it runs away once!
+
+            partyBtn.addEventListener('mouseover', (e) => {
+                if (trickMode) {
+                    partyBtn.style.position = 'absolute';
+                    partyBtn.style.top = '-50px';
+                    partyBtn.style.left = '20px';
+                    partyBtn.innerText = "Haha! Okay, try now.";
+                    trickMode = false;
+                }
+            });
+
+            partyBtn.addEventListener('click', () => {
+                document.body.classList.toggle('party-mode');
+                if (document.body.classList.contains('party-mode')) {
+                    partyBtn.innerText = "TURN OFF PARTY MODE!!";
+                    fireConfetti();
+                    setInterval(() => {
+                        if (document.body.classList.contains('party-mode')) fireConfetti();
+                    }, 2000);
+                } else {
+                    partyBtn.innerText = "DO NOT CLICK THIS BUTTON";
+                    // Note: setInterval keeps running in background but won't text party-mode logic
+                }
+            });
         });
     </script>
 </body>
+
 </html>
